@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <title>Ubiidea</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+    <input type="text" id="input-prompt">
+    <button type="button" onclick="removePrompt()">Set Prompt</button> 
+    <input type="number" id="input-max-keyword">
+    <button type="button" onclick="setMaxKeyword()">Set Maximum Keywords</button> 
+    <button type="button" onclick="clearData()">Clear Data</button> 
+    <button type="button" onclick="download()">Download Data</button> 
+    <br/>
+    <br/>
+
+    <button id="btn-speech-to-text" type="button" onclick="runSpeechRecognition()" style="margin-left:50px; margin-top:20px">Start Recording</button> 
+    <button id="btn-hint" type="button" style="margin-left:20px;" onclick="giveHint()" >Give Me a Hint</button> <mark id="hint" style="margin-left:20px">Hint</mark>
+    <p id="state" style="padding-left:50px">STATUS: waiting for your speech</p>
+    <p style="padding-left:50px">Show image: 
+        <label class="switch" style="margin-right:20px">
+            <input type="checkbox" onclick="getImage()">
+            <span class="slider round"></span>
+        </label>
+    Script: 
+        <label class="switch">
+            <input type="checkbox" onclick="getScript()">
+            <span class="slider round"></span>
+        </label>
+    </p>
+    <div id="root-container" style="padding-left:60px"></div>
+    <div id="script-container" style="padding-left:60px"></div>
+    <script src="public/index.js"></script>
+</body>
+ 
