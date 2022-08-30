@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 const keyword_extraction = require(`${__dirname}/utils/keyword_extraction.js`);
 const image_search = require(`${__dirname}/utils/image_search.js`);
-
+const summarization = require("./utils/summarization");
 
 const app = express();
 const expressPort = 3000;
@@ -26,8 +26,11 @@ app.post('/data', (req, res, next) => {
     console.log(data);
     
     var cleanKeywords;
-    
-    keyword_extraction(data)
+    summarization(data)
+    .then( summary => {
+        console.log("---------summary---------");
+        console.log(summary);
+    keyword_extraction(summary)
     //pre-processing
     .then( result => {
         console.log("---------response---------");
@@ -59,6 +62,7 @@ app.post('/data', (req, res, next) => {
         res.json({response: cleanKeywords, images: imageURLs});
     })
     .catch()
+})
 })
 
 app.post('/image', async (req, res, next) => {
@@ -96,6 +100,41 @@ app.post('/keyword', (req, res, next) => {
     })
 
 })
+
+
+
+
+// app.post('/keyword', (req, res, next) => {
+
+//     var data = req.body['val'];
+//     console.log(data);
+//     summarization(data)
+//         .then(summary => {
+//             console.log("---------summary---------");
+//             console.log(summary);
+//             keyword_extraction(summary).then(result => {
+//                 console.log("---------response---------");
+//                 var keywords;
+//                 cleanKeywords = [];
+//                 if (result.indexOf(",") == -1) {
+//                     keywords = result.split("\n");
+//                 }
+//                 else {
+//                     keywords = result.split(",");
+//                 }
+//                 keywords.forEach(element => {
+//                     if (element[0] == " " || element[0] == "-") {
+//                         cleanKeywords.push(element.slice(1));
+//                     }
+//                     else {
+//                         cleanKeywords.push(element);
+//                     }
+//                 })
+//                 res.json({ response: cleanKeywords });
+//             })
+//         })
+
+// })
 
 
 

@@ -41,11 +41,12 @@
             const formdata = new FormData();
             formdata.append("key", "02c7859d55e7fbcec2bf678e22d442c7");
             formdata.append("lang", "en");
-            formdata.append("txt", ∆∆toLowerCase());
+            formdata.append("txt", inputTranscription);
             const requestOptions = {
                 method: 'POST',
                 body: formdata,
                 redirect: 'follow'
+                
             };
 
             fetch("https://api.meaningcloud.com/clustering-1.1", requestOptions)
@@ -78,6 +79,28 @@
     <button onclick="extrackKeywords()">Extract keywords from this text</button>
     <script>
         var mapdata=[]
+        var topic = "newspaper"
+        var testSentence = "iloveyoulovelove";
+        testSentence = testSentence.replaceAll("love","");
+        console.log(testSentence);
+        var inputTranscription =" a raw material to make fire, because it is made from wood so it is easy to fire \n\
+         fold it as paper plane and throw it for fun \n\
+          use to clean the table because newspaper also counts as paper\n\
+           draw something on the newspaper, just for fun\n\
+           if a table's leg is broken, you can fold the newpaper and put it under the legs\n\
+            someplace when the window is broken, they will stick the newspaper to the window\n\
+            especially in winter, you stick the newspaper to window just to prevent frozen\n\
+            cut it and turn it into paper cut\n\
+            when somebody pens award they will fold the newpaper as a hat\n\
+            when i was a child, I would like to fold newspaper as boat and let it float on water\n\
+            collect a lot of old newsaper and sell it\n\
+            make the newspaper as a box to put some staff in side, some coins\n\
+            use the newspaper to wipe your hands\n\
+            ".toLowerCase();
+
+        // var inputTranscription ="newspaper is a raw material to make fire, because it is made from wood so it is easy to fire \n newspaper is fold it as paper plane and throw it for fun \n newspaper can be use to clean the table because newspaper also counts as paper\n draw something on the newspaper, just for fun\nif a table's leg is broken, you can fold the newpaper and put it under the legs\n someplace when the window is broken, they will stick the newspaper to the window".toLowerCase();
+        inputTranscription = inputTranscription.replaceAll('newspaper','');
+        console.log(inputTranscription);
         async function extrackKeywords(sentence, title) {
             const PREFIX_URL = "http://127.0.0.1:3000"
             var returnJSON;
@@ -93,9 +116,11 @@
                 .then(() => {
                     console.log("returnJSON");
                     console.log(returnJSON.response);
-                    keywordsList = returnJSON.response
+                    keywordsList = returnJSON.response;
+                    mapdata.push([topic.toLowerCase(),title.toLowerCase()]);
                     for ( let i=0;i<keywordsList.length; i++){
-                        mapdata.push([title,keywordsList[i]]);
+                        if(title=='' || keywordsList[i]=='')continue;
+                        mapdata.push([title.toLowerCase(),keywordsList[i].toLowerCase()]);
                     }
                     console.log(mapdata);
                 })
@@ -208,100 +233,31 @@
                     ['Slavic', 'East Slavic'],
                     ['Slavic', 'West Slavic'],
                     ['Slavic', 'South Slavic'],
-                    // // Leaves:
-                    // ['newspaper', 'Phrygian'],
-                    // ['newspaper', 'Armenian'],
-                    // ['newspaper', 'Albanian'],
-                    // ['newspaper', 'Thracian'],
-                    // ['Tocharian', 'Tocharian A'],
-                    // ['Tocharian', 'Tocharian B'],
-                    // ['Anatolian', 'Hittite'],
-                    // ['Anatolian', 'Palaic'],
-                    // ['Anatolian', 'Luwic'],
-                    // ['Anatolian', 'Lydian'],
-                    // ['Iranian', 'Balochi'],
-                    // ['Iranian', 'Kurdish'],
-                    // ['Iranian', 'Pashto'],
-                    // ['Iranian', 'Sogdian'],
-                    // ['Old Persian', 'Pahlavi'],
-                    // ['Middle Persian', 'Persian'],
-                    // ['Hellenic', 'Greek'],
-                    // ['Dardic', 'Dard'],
-                    // ['Sanskrit', 'Sindhi'],
-                    // ['Sanskrit', 'Romani'],
-                    // ['Sanskrit', 'Urdu'],
-                    // ['Sanskrit', 'Hindi'],
-                    // ['Sanskrit', 'Bihari'],
-                    // ['Sanskrit', 'Assamese'],
-                    // ['Sanskrit', 'Bengali'],
-                    // ['Sanskrit', 'Marathi'],
-                    // ['Sanskrit', 'Gujarati'],
-                    // ['Sanskrit', 'Punjabi'],
-                    // ['Sanskrit', 'Sinhalese'],
-                    // ['Osco-Umbrian', 'Umbrian'],
-                    // ['Osco-Umbrian', 'Oscan'],
-                    // ['Latino-Faliscan', 'Faliscan'],
-                    // ['Latin', 'Portugese'],
-                    // ['Latin', 'Spanish'],
-                    // ['Latin', 'French'],
-                    // ['Latin', 'Romanian'],
-                    // ['Latin', 'Italian'],
-                    // ['Latin', 'Catalan'],
-                    // ['Latin', 'Franco-Provençal'],
-                    // ['Latin', 'Rhaeto-Romance'],
-                    // ['Brythonic', 'Welsh'],
-                    // ['Brythonic', 'Breton'],
-                    // ['Brythonic', 'Cornish'],
-                    // ['Brythonic', 'Cuymbric'],
-                    // ['Goidelic', 'Modern Irish'],
-                    // ['Goidelic', 'Scottish Gaelic'],
-                    // ['Goidelic', 'Manx'],
-                    // ['East Germanic', 'Gothic'],
-                    // ['Middle Low German', 'Low German'],
-                    // ['Middle High German', '(High) German'],
-                    // ['Middle High German', 'Yiddish'],
-                    // ['Middle English', 'English'],
-                    // ['Middle Dutch', 'Hollandic'],
-                    // ['Middle Dutch', 'Flemish'],
-                    // ['Middle Dutch', 'Dutch'],
-                    // ['Middle Dutch', 'Limburgish'],
-                    // ['Middle Dutch', 'Brabantian'],
-                    // ['Middle Dutch', 'Rhinelandic'],
-                    // ['Old Frisian', 'Frisian'],
-                    // ['Middle Danish', 'Danish'],
-                    // ['Middle Swedish', 'Swedish'],
-                    // ['Middle Norwegian', 'Norwegian'],
-                    // ['Old Norse', 'Faroese'],
-                    // ['Old Icelandic', 'Icelandic'],
-                    // ['Baltic', 'Old Prussian'],
-                    // ['Baltic', 'Lithuanian'],
-                    // ['Baltic', 'Latvian'],
-                    // ['West Slavic', 'Polish'],
-                    // ['West Slavic', 'Slovak'],
-                    // ['West Slavic', 'Czech'],
-                    // ['West Slavic', 'Wendish'],
-                    // ['East Slavic', 'Bulgarian'],
-                    // ['East Slavic', 'Old Church Slavonic'],
-                    // ['East Slavic', 'Macedonian'],
-                    // ['East Slavic', 'Serbo-Croatian'],
-                    // ['East Slavic', 'Slovene'],
-                    // ['South Slavic', 'Russian'],
-                    // ['South Slavic', 'Ukrainian'],
-                    // ['South Slavic', 'Belarusian'],
-                    // ['South Slavic', 'Rusyn']
+ 
                 ]
             }]
         });
 
         async function parseData() {
             mapResult = [];
+            sentenceIdList =[];
             var cluster = JSON.parse(getCookie("clusters"));
+        
             for (let i = 0; i < cluster.length; i++) {
                 let document_list = cluster[i].document_list;
                 let title = cluster[i].title;
                 let list = Object.values(document_list);
+                let idList = Object.keys(document_list);
                 for (let j = 0; j < list.length; j++) {
-                    extrackKeywords(list[j], title);
+                    
+                    idIndex = sentenceIdList.findIndex((element) => element == idList[j])
+                    
+                    if(idIndex == -1){
+                        extrackKeywords(list[j], title);
+                        sentenceIdList.push(idList[j]);
+                        console.log("cluste: "+i+" push:"+idList[j]);
+                    }
+                     
                 }
             }
         }
@@ -321,137 +277,6 @@
                     enabled: true
                 },
                 data: mapdata,
-                // data: [['newspaper', 'fold'],
-                // ['newspaper', 'draw'],
-                // ['fold', 'origami'],
-                // ['fold', 'cup'],
-                // ['fold', 'bowl'],
-                // ['draw', 'fun'],
-                // ['newspaper', 'Germanic'],
-                // ['newspaper', 'Celtic'],
-                // ['newspaper', 'Italic'],
-                // ['newspaper', 'Hellenic'],
-                // ['newspaper', 'Anatolian'],
-                // ['newspaper', 'Indo-Iranian'],
-                // ['newspaper', 'Tocharian'],
-                // ['Indo-Iranian', 'Dardic'],
-                // ['Indo-Iranian', 'Indic'],
-                // ['Indo-Iranian', 'Iranian'],
-                // ['Iranian', 'Old Persian'],
-                // ['Old Persian', 'Middle Persian'],
-                // ['Indic', 'Sanskrit'],
-                // ['Italic', 'Osco-Umbrian'],
-                // ['Italic', 'Latino-Faliscan'],
-                // ['Latino-Faliscan', 'Latin'],
-                // ['Celtic', 'Brythonic'],
-                // ['Celtic', 'Goidelic'],
-                // ['Germanic', 'North Germanic'],
-                // ['Germanic', 'West Germanic'],
-                // ['Germanic', 'East Germanic'],
-                // ['North Germanic', 'Old Norse'],
-                // ['North Germanic', 'Old Swedish'],
-                // ['North Germanic', 'Old Danish'],
-                // ['West Germanic', 'Old English'],
-                // ['West Germanic', 'Old Frisian'],
-                // ['West Germanic', 'Old Dutch'],
-                // ['West Germanic', 'Old Low German'],
-                // ['West Germanic', 'Old High German'],
-                // ['Old Norse', 'Old Icelandic'],
-                // ['Old Norse', 'Old Norwegian'],
-                // ['Old Norwegian', 'Middle Norwegian'],
-                // ['Old Swedish', 'Middle Swedish'],
-                // ['Old Danish', 'Middle Danish'],
-                // ['Old English', 'Middle English'],
-                // ['Old Dutch', 'Middle Dutch'],
-                // ['Old Low German', 'Middle Low German'],
-                // ['Old High German', 'Middle High German'],
-                // ['newspaper', 'Slavic'],
-                // ['Balto-Slavic', 'Baltic'],
-                // ['Slavic', 'East Slavic'],
-                // ['Slavic', 'West Slavic'],
-                // ['Slavic', 'South Slavic'],
-                // // Leaves:
-                // ['newspaper', 'Phrygian'],
-                // ['newspaper', 'Armenian'],
-                // ['newspaper', 'Albanian'],
-                // ['newspaper', 'Thracian'],
-                // ['Tocharian', 'Tocharian A'],
-                // ['Tocharian', 'Tocharian B'],
-                // ['Anatolian', 'Hittite'],
-                // ['Anatolian', 'Palaic'],
-                // ['Anatolian', 'Luwic'],
-                // ['Anatolian', 'Lydian'],
-                // ['Iranian', 'Balochi'],
-                // ['Iranian', 'Kurdish'],
-                // ['Iranian', 'Pashto'],
-                // ['Iranian', 'Sogdian'],
-                // ['Old Persian', 'Pahlavi'],
-                // ['Middle Persian', 'Persian'],
-                // ['Hellenic', 'Greek'],
-                // ['Dardic', 'Dard'],
-                // ['Sanskrit', 'Sindhi'],
-                // ['Sanskrit', 'Romani'],
-                // ['Sanskrit', 'Urdu'],
-                // ['Sanskrit', 'Hindi'],
-                // ['Sanskrit', 'Bihari'],
-                // ['Sanskrit', 'Assamese'],
-                // ['Sanskrit', 'Bengali'],
-                // ['Sanskrit', 'Marathi'],
-                // ['Sanskrit', 'Gujarati'],
-                // ['Sanskrit', 'Punjabi'],
-                // ['Sanskrit', 'Sinhalese'],
-                // ['Osco-Umbrian', 'Umbrian'],
-                // ['Osco-Umbrian', 'Oscan'],
-                // ['Latino-Faliscan', 'Faliscan'],
-                // ['Latin', 'Portugese'],
-                // ['Latin', 'Spanish'],
-                // ['Latin', 'French'],
-                // ['Latin', 'Romanian'],
-                // ['Latin', 'Italian'],
-                // ['Latin', 'Catalan'],
-                // ['Latin', 'Franco-Provençal'],
-                // ['Latin', 'Rhaeto-Romance'],
-                // ['Brythonic', 'Welsh'],
-                // ['Brythonic', 'Breton'],
-                // ['Brythonic', 'Cornish'],
-                // ['Brythonic', 'Cuymbric'],
-                // ['Goidelic', 'Modern Irish'],
-                // ['Goidelic', 'Scottish Gaelic'],
-                // ['Goidelic', 'Manx'],
-                // ['East Germanic', 'Gothic'],
-                // ['Middle Low German', 'Low German'],
-                // ['Middle High German', '(High) German'],
-                // ['Middle High German', 'Yiddish'],
-                // ['Middle English', 'English'],
-                // ['Middle Dutch', 'Hollandic'],
-                // ['Middle Dutch', 'Flemish'],
-                // ['Middle Dutch', 'Dutch'],
-                // ['Middle Dutch', 'Limburgish'],
-                // ['Middle Dutch', 'Brabantian'],
-                // ['Middle Dutch', 'Rhinelandic'],
-                // ['Old Frisian', 'Frisian'],
-                // ['Middle Danish', 'Danish'],
-                // ['Middle Swedish', 'Swedish'],
-                // ['Middle Norwegian', 'Norwegian'],
-                // ['Old Norse', 'Faroese'],
-                // ['Old Icelandic', 'Icelandic'],
-                // ['Baltic', 'Old Prussian'],
-                // ['Baltic', 'Lithuanian'],
-                // ['Baltic', 'Latvian'],
-                // ['West Slavic', 'Polish'],
-                // ['West Slavic', 'Slovak'],
-                // ['West Slavic', 'Czech'],
-                // ['West Slavic', 'Wendish'],
-                // ['East Slavic', 'Bulgarian'],
-                // ['East Slavic', 'Old Church Slavonic'],
-                // ['East Slavic', 'Macedonian'],
-                // ['East Slavic', 'Serbo-Croatian'],
-                // ['East Slavic', 'Slovene'],
-                // ['South Slavic', 'Russian'],
-                // ['South Slavic', 'Ukrainian'],
-                // ['South Slavic', 'Belarusian'],
-                // ['South Slavic', 'Rusyn']
-                // ]
             });
 
             console.log(chart.series);
